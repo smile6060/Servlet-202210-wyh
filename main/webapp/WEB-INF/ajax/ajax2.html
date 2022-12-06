@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+	<input type="text" class="address1"> <!-- 부산광역시 -->
+	<input type="text" class="address2"> <!-- 동래구 -->
+	<input type="text" class="address3"> <!-- 중앙대로 1285번길 -->
+	<button type="button" class="submit-button">주소</button>
+	
+	<script type="text/javascript">
+		const submitButton = document.querySelector(".submit-button");
+		
+		submitButton.onclick = () => {
+			let address = {
+				address1: document.querySelector(".address1").value,
+				address2: document.querySelector(".address2").value,
+				address3: document.querySelector(".address3").value
+		}
+		
+			// JSON.stringify(); 		객체(Object) -> JSON
+			// JSON.parse();         	JSON ->  객체(Object)
+			
+			$.ajax({
+				async: false,
+				type: "post",
+				url: "/api/ajax2",
+				data: {
+					jsonData: JSON.stringify(address) //jsonData = key, JSON.stringify(address) = value
+					},
+				dataType: "text",
+				success: response => {
+					alert(response);
+					
+					let obj = JSON.parse(response);
+					
+					console.log(obj.address1);
+					console.log(obj.address2);
+					console.log(obj.address3);
+				},
+				error: response => {
+					alert("요청 실패!")
+				}
+			});
+				
+	}
+	
+	
+	</script>
+</body>
+</html>
